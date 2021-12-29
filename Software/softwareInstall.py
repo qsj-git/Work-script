@@ -23,7 +23,7 @@ def python3():
                     shell=True)
     if status == 0:
         subprocess.call("ln -s /usr/local/python3.7/bin/python3 /usr/bin/python3", shell=True)
-        subprocess.call("ln -s /usr/local/Python3.7/bin/pip3 /usr/bin/pip3", shell=True)
+        subprocess.call("ln -s /usr/local/python3.7/bin/pip3 /usr/bin/pip3", shell=True)
     else:
         print('编译安装失败，请检查！')
 
