@@ -129,21 +129,21 @@ def redis():
 
 
 if __name__ == '__main__':
-    software = input("请选择要安装的软件(python3/php72/nginx/redis/phpredis):")
-    if software == "php72":
+    software = input("请选择要安装的软件(python3(1)/php72(2)/nginx(3)/redis(4)/phpredis(5)):")
+    if software == "2":
         php72()
         module = input("需要安装模块吗(yes/No):")
         if module == "yes":
             phpredis()
         else:
             sys.exit()
-    elif software == "nginx":
+    elif software == "3":
         nginx()
-    elif software == "redis":
+    elif software == "4":
         redis()
-    elif software == "python3":
+    elif software == "1":
         python3()
-    elif software == "phpredis":
+    elif software == "5":
         phpredis()
     else:
         print("请选择括号内的软件！")
