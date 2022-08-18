@@ -29,13 +29,22 @@ def python3():
 
 
 def php72():
-    subprocess.run('''yum -y install gcc gcc-c++  make mysql-devel zlib zlib-devel pcre pcre-devel  libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers ''', shell=True)
+    rely = '''gcc gcc-c++  make mysql-devel zlib zlib-devel pcre pcre-devel  libjpeg libjpeg-devel libpng libpng-devel 
+    freetype freetype-devel libxml2 libxml2-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses 
+    ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel openssl openssl-devel openldap 
+    openldap-devel nss_ldap openldap-clients openldap-servers'''
+    subprocess.run('''yum -y install {} '''.format(rely), shell=True)
     subprocess.call('yum -y install autoconf ', shell=True)
     os.popen("mkdir /usr/local/php72")
 
     if os.path.isfile("php-7.2.0.tar.gz"):
         subprocess.run("tar -zxf php-7.2.0.tar.gz", shell=True)
-        instat = subprocess.run('''cd php-7.2.0 && ./configure --prefix=/usr/local/php72 --with-config-file-path=/usr/local/php72 --enable-mbstring --with-openssl --enable-ftp --with-gd --with-jpeg-dir=/usr --with-png-dir=/usr --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-pear --enable-sockets --with-freetype-dir=/usr --with-zlib --with-libxml-dir=/usr --with-xmlrpc --enable-zip --enable-fpm --enable-xml --enable-sockets --with-gd --with-zlib --with-iconv --enable-zip --with-freetype-dir=/usr/lib/ --enable-soap --enable-pcntl --enable-cli --with-curl''', shell=True)
+        instat = subprocess.run('''cd php-7.2.0 && ./configure --prefix=/usr/local/php72 
+        --with-config-file-path=/usr/local/php72 --enable-mbstring --with-openssl --enable-ftp --with-gd 
+        --with-jpeg-dir=/usr --with-png-dir=/usr --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd 
+        --with-pear --enable-sockets --with-freetype-dir=/usr --with-zlib --with-libxml-dir=/usr --with-xmlrpc 
+        --enable-zip --enable-fpm --enable-xml --enable-sockets --with-gd --with-zlib --with-iconv --enable-zip 
+        --with-freetype-dir=/usr/lib/ --enable-soap --enable-pcntl --enable-cli --with-curl''', shell=True)
 
         if "0" == str(instat)[-2]:
             subprocess.run("cd php-7.2.0 &&  make && make install", shell=True)
