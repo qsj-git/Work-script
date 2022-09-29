@@ -1,0 +1,15 @@
+[Unit]
+Description=mysql server
+After=network.target syslog.target
+
+[Service]
+Type=forking
+ExecStart=/etc/init.d/mysql start
+ExecReload=/etc/init.d/mysql reload
+ExecStop=/etc/init.d/mysql stop
+KillMode=process
+Restart=on-failure
+RestartSec=42s
+
+[Install]
+WantedBy=multi-user.target
