@@ -34,7 +34,7 @@ def install_mysql():
     if os.path.exists('/usr/local/mysql5.7'):
         os.system('mkdir {} && chown -R mysql.mysql {}'.format(mysql_datapath, mysql_datapath))
         os.system('mkdir {} && chown -R mysql.mysql {}'.format(mysql_logpath, mysql_logpath))
-        subprocess.call('cp my.cnf {}'.format(cnf), shell=True)
+        subprocess.call('cp ./config/my.cnf {}'.format(cnf), shell=True)
         subprocess.call('{} --defaults-file={} --basedir=/usr/local/mysql5.7/ --datadir={} --user=mysql --initialize'
                         .format(mysqld, cnf, mysql_datapath), shell=True)
         # 设置mysql 启动脚本
@@ -44,7 +44,7 @@ def install_mysql():
         subprocess.call('chmod +x /etc/init.d/mysql', shell=True)
         subprocess.call('ln -s /usr/local/mysql5.7/bin/mysql /usr/sbin/', shell=True)
         # 设置开机自启动
-        subprocess.call('cp mysql.service /etc/systemd/system/', shell=True)
+        subprocess.call('cp ./config/mysql.service /etc/systemd/system/', shell=True)
         subprocess.call('systemctl daemon-reload', shell=True)
         subprocess.call('systemctl enable mysql', shell=True)
         subprocess.call('systemctl start mysql', shell=True)

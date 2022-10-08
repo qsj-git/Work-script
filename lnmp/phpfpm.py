@@ -50,7 +50,7 @@ def install_php():
 
 
 def wget_php():
-    if os.path.isfile("src/php-7.4.30.tar.gz"):
+    if os.path.isfile(php_PackagePath):
         install_php()
     else:
         # 下载php7.4.30tar包，如果超时60秒终端进程。
@@ -64,4 +64,4 @@ def wget_php():
 
 
 if __name__ == '__main__':
-    install_php()
+    wget_php()
