@@ -61,7 +61,3 @@ def wget_php():
         except subprocess.TimeoutExpired as e:
             print("cmd:{},timeout:{}".format(e.cmd, e.timeout))
             sys.exit()
-
-
-if __name__ == '__main__':
-    wget_php()
