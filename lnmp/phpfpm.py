@@ -37,7 +37,7 @@ def install_php():
             # 拷贝ini 等文件
             os.popen("cp ./src/php-7.4.30/php.ini-production /usr/local/php-fpm7.4/etc/php.ini")
             os.popen("cp ./src/php-7.4.30/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm && chmod +x /etc/init.d/php-fpm")
-            os.popen("cp /usr/local/php-fpm7.4/etc/php-fpm.conf.default /usr/local/php-fpm7.4/etc/php-fpm.conf")
+            os.popen("cp ./config/php-fpm.conf /usr/local/php-fpm7.4/etc/php-fpm.conf")
             time.sleep(2)
 
             os.popen("cp /usr/local/php-fpm7.4/etc/php-fpm.d/www.conf.default /usr/local/php-fpm7.4/etc/php-fpm.d/www.conf ")
