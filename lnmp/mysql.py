@@ -53,9 +53,10 @@ def install_mysql():
         sys.exit()
 
 
-def operation_mysql(passwd='123456'):
+def operation_mysql(passwd):
     try:
-        db = pymysql.connect(host='localhost', user='root', password='', port=3306)
+        old_password = "123145"
+        db = pymysql.connect(host='localhost', user='root', password=old_password, port=3306)
         # 使用 cursor() 方法创建一个游标对象 cursor
         cursor = db.cursor()
         # 使用 execute()  方法执行 SQL,设置密码
@@ -66,8 +67,8 @@ def operation_mysql(passwd='123456'):
         subprocess.call('systemctl stop mysql', shell=True)
         file.exact_match('/etc/my.cnf', 'skip-grant-tables', '#skip-grant-tables')
         os.system('systemctl start mysql')
-    except:
-        print('连接失败，请检查！')
+    except Exception as e:
+        print('连接失败，请检查！错误信息{}'.format(e))
         sys.exit()
 
 
