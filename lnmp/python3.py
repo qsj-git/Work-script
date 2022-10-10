@@ -42,7 +42,7 @@ def python3():
         sys.exit()
 
     print("==" * 15 + "开始安装" + "==" * 15)
-    subprocess.call("tar zxf ./src/Python-3.7.1.tgz", shell=True)
+    subprocess.call("tar zxf src/Python-3.7.1.tgz -C src/", shell=True)
     if os.path.isdir('./src/Python-3.7.1'):
         subprocess.call("cd ./src/Python-3.7.1 &&  ./configure --prefix=/usr/local/python3.7 ", shell=True)
         status = subprocess.call("cd ./src/Python-3.7.1 && make && make install", shell=True)
