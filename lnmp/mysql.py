@@ -28,15 +28,15 @@ def install_mysql():
     else:
         subprocess.call('wget https://cdn.mysql.com//Downloads/MySQL-5.7/{} -P {}'.format(mysql_package, src),
                         shell=True)
-        subprocess.call('cd ./src && tar -xf {} '.format(mysql_package_path), shell=True)
+        subprocess.call('tar -xf {} -C src/'.format(mysql_package_path), shell=True)
         subprocess.call('mv ./src/mysql-5.7.39-linux-glibc2.12-x86_64 /usr/local/mysql5.7', shell=True)
     # 安装mysql,及mysql 初始化
     if os.path.exists('/usr/local/mysql5.7'):
         os.system('mkdir {} && chown -R mysql.mysql {}'.format(mysql_datapath, mysql_datapath))
         os.system('mkdir {} && chown -R mysql.mysql {}'.format(mysql_logpath, mysql_logpath))
         subprocess.call('cp ./config/my.cnf {}'.format(cnf), shell=True)
-        subprocess.call('{} --defaults-file={} --basedir=/usr/local/mysql5.7/ --datadir={} --user=mysql --initialize'
-                        .format(mysqld, cnf, mysql_datapath), shell=True)
+        subprocess.call('{} --defaults-file={} --basedir={} --datadir={} --user=mysql --initialize'
+                        .format(mysqld, cnf, mysql_path, mysql_datapath), shell=True)
         # 设置mysql 启动脚本
         subprocess.call('cp /usr/local/mysql5.7/support-files/mysql.server /etc/init.d/mysql', shell=True)
         file.exact_match('/etc/init.d/mysql', 'basedir=', 'basedir=/usr/local/mysql5.7')
