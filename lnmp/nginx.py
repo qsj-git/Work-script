@@ -39,12 +39,13 @@ def nginx():
         sys.exit()
     print("=======================开始安装nginx====================")
     time.sleep(1)
+    subprocess.run("mkdir log", shell=True)
     subprocess.run("mkdir /usr/local/nginx", shell=True)
     lua_mould = os.path.exists("{}lua-nginx-module-master".format(ng_pwd))
     nginx_http = os.path.exists("{}nginx-http-concat".format(ng_pwd))
     ngx_devel = os.path.exists("{}ngx_devel_kit-master".format(ng_pwd))
     if lua_mould and nginx_http and ngx_devel:
-        os.popen("mv ./nginx_module/* /usr/local/src/")
+        os.popen("cp ./nginx_module/* /usr/local/src/")
     else:
         print("请查看lua-nginx-module-master，nginx-http-concat，ngx_devel_kit-master文件是否存在")
         sys.exit()
