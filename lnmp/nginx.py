@@ -8,15 +8,17 @@ src = "./src/"
 def install_nginx():
     subprocess.run("cd {} && tar -zxf nginx-1.16.1.tar.gz".format(src), shell=True)
     ng_config = subprocess.call(
-        '''cd {}nginx-1.16.1 && ./configure --prefix=/usr/local/nginx --user=www --group=www --with-ld-opt=-Wl,-rpath,/usr/local/luajit/lib --add-module=/usr/local/src/ngx_devel_kit-master --add-module=/usr/local/src/lua-nginx-module-master --add-module=/usr/local/src/nginx-http-concat --without-http_memcached_module --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-http_realip_module --with-stream --with-http_v2_module >> ../../log/nginx.log'''.format(src),
+        '''cd {}nginx-1.16.1 && ./configure --prefix=/usr/local/nginx --user=www --group=www --with-ld-opt=-Wl,-rpath,/usr/local/luajit/lib --without-http_memcached_module --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-http_realip_module --with-stream --with-http_v2_module >> ../../log/nginx.log'''.format(src),
         shell=True)
     if ng_config == 0:
         print('=========== 开始编译安装 =============')
-        make = subprocess.run("cd {}nginx-1.16.1 && make && make install >> ../../log/nginx.log ".format(src),
+        make = subprocess.call("cd {}nginx-1.16.1 && make && make install >> ../../log/nginx.log ".format(src),
                               shell=True)
+        print("make is {}\n".format(make))
         if make == 0:
             os.popen("ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx")
             os.popen("useradd www")
+            os.popen("\cp config/nginx.conf  /usr/local/nginx/conf/")
             subprocess.call("nginx -v ", shell=True)
             print("\n nginx 安装完成！在 /usr/local/nginx 下,请按需修改nginx配置文件。\n启动方式：nginx")
         else:
@@ -45,7 +47,7 @@ def nginx():
     nginx_http = os.path.exists("{}nginx-http-concat".format(ng_pwd))
     ngx_devel = os.path.exists("{}ngx_devel_kit-master".format(ng_pwd))
     if lua_mould and nginx_http and ngx_devel:
-        os.popen("cp ./nginx_module/* /usr/local/src/")
+        os.popen("cp -r ./nginx_module/* /usr/local/src/")
     else:
         print("请查看lua-nginx-module-master，nginx-http-concat，ngx_devel_kit-master文件是否存在")
         sys.exit()
