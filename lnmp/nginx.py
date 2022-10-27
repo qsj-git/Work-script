@@ -3,12 +3,13 @@ import os,sys
 import time
 
 src = "./src/"
+nginxpath = "/usr/local/nginx"
 
 
 def install_nginx():
     subprocess.run("cd {} && tar -zxf nginx-1.16.1.tar.gz".format(src), shell=True)
     ng_config = subprocess.call(
-        '''cd {}nginx-1.16.1 && ./configure --prefix=/usr/local/nginx --user=www --group=www --with-ld-opt=-Wl,-rpath,/usr/local/luajit/lib --without-http_memcached_module --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-http_realip_module --with-stream --with-http_v2_module >> ../../log/nginx.log'''.format(src),
+        '''cd {}nginx-1.16.1 && ./configure --prefix={} --user=www --group=www --with-ld-opt=-Wl,-rpath,/usr/local/luajit/lib --without-http_memcached_module --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-http_realip_module --with-stream --with-http_v2_module >> ../../log/nginx.log'''.format(src, nginxpath),
         shell=True)
     if ng_config == 0:
         print('=========== 开始编译安装 =============')
@@ -16,7 +17,7 @@ def install_nginx():
                               shell=True)
         print("make is {}\n".format(make))
         if make == 0:
-            os.popen("ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx")
+            os.popen("ln -s {}/sbin/nginx /usr/bin/nginx".format(nginxpath))
             os.popen("useradd www")
             os.popen("\cp config/nginx.conf  /usr/local/nginx/conf/")
             subprocess.call("nginx -v ", shell=True)
@@ -42,7 +43,7 @@ def nginx():
     print("=======================开始安装nginx====================")
     time.sleep(1)
     subprocess.run("mkdir log", shell=True)
-    subprocess.run("mkdir /usr/local/nginx", shell=True)
+    subprocess.run("mkdir {}".format(nginxpath), shell=True)
     lua_mould = os.path.exists("{}lua-nginx-module-master".format(ng_pwd))
     nginx_http = os.path.exists("{}nginx-http-concat".format(ng_pwd))
     ngx_devel = os.path.exists("{}ngx_devel_kit-master".format(ng_pwd))
