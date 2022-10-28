@@ -19,6 +19,7 @@ def install_nginx():
         if make == 0:
             os.popen("ln -s {}/sbin/nginx /usr/bin/nginx".format(nginxpath))
             os.popen("useradd www")
+            # 在cp前面加个“\” 是取消alias效果
             os.popen("\cp config/nginx.conf  /usr/local/nginx/conf/")
             subprocess.call("nginx -v ", shell=True)
             print("\n nginx 安装完成！在 /usr/local/nginx 下,请按需修改nginx配置文件。\n启动方式：nginx")
