@@ -8,6 +8,7 @@ nginxpath = "/usr/local/nginx"
 
 def install_nginx():
     subprocess.run("cd {} && tar -zxf nginx-1.16.1.tar.gz".format(src), shell=True)
+    subprocess.run("mkdir log", shell=True)
     ng_config = subprocess.call(
         '''cd {}nginx-1.16.1 && ./configure --prefix={} --user=www --group=www --with-ld-opt=-Wl,-rpath,/usr/local/luajit/lib --without-http_memcached_module --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-http_realip_module --with-stream --with-http_v2_module >> ../../log/nginx.log'''.format(src, nginxpath),
         shell=True)
