@@ -7,7 +7,6 @@ import re,time
 
 '''初始化环境，配置阿里云yum源'''
 def configure_yum ():
-
     subprocess.call('mkdir /etc/yum.repos.d/bak', shell=True)
     subprocess.call('mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/bak/', shell=True)
     version_num = re.split('el|\.', platform.release())
@@ -26,15 +25,8 @@ def configure_yum ():
 
 
 '''安装python 3 '''
-def python3():
-    install = subprocess.call('''yum -y install libffi-devel zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel zlib zlib-devel gcc make wget''', shell=True)
-    subprocess.call('mkdir /usr/local/python3.7', shell=True)
-
-    if 1 == install:
-        print("依赖环境安装失败，请检查yum环境")
-        sys.exit()
-
-    print("=="*15+"下载安装包"+"=="*15)
+def installpy3():
+    print("==" * 15 + "下载安装包" + "==" * 15)
     subprocess.call(" wget https://www.python.org/ftp/python/3.7.1/Python-3.7.1.tgz -O ./src/Python-3.7.1.tgz",
                     shell=True)
     if not os.path.exists("./src/Python-3.7.1.tgz"):
@@ -56,6 +48,21 @@ def python3():
     else:
         print("目录不存在！请检查")
         sys.exit()
+
+
+def python3():
+    install = subprocess.call('''yum -y install libffi-devel zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel zlib zlib-devel gcc make wget''', shell=True)
+    subprocess.call('mkdir /usr/local/python3.7', shell=True)
+
+    if 1 == install:
+        print("依赖环境安装失败，请检查yum环境")
+        sys.exit()
+
+    if os.path.exists("src"):
+        installpy3()
+    else:
+        subprocess.call('mkdir src', shell=True)
+        installpy3()
 
 
 if __name__ == '__main__':
